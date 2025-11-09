@@ -8,6 +8,7 @@ import ViewModels from "../pages/ViewModels";
 import PrivateRoute from "../components/PrivateRoute";
 import ModelDetails from "../pages/ModelDetails";
 import UpdateModel from "../pages/UpdateModel";
+import ErrorPage from "../pages/ErrorPage";
 
 const router = createBrowserRouter([
   {
@@ -18,6 +19,11 @@ const router = createBrowserRouter([
         index: true,
         element: <Home />,
       },
+      {
+        path: "*", // invalid route fallback
+        element: <ErrorPage />,
+      }
+      ,
       {
         path: "login",
         element: <Login />,
@@ -51,13 +57,13 @@ const router = createBrowserRouter([
         ),
       },
       {
-       path: "/update-model/:id",
+        path: "/update-model/:id",
         element: (
           <PrivateRoute>
             <UpdateModel />
           </PrivateRoute>
         ),
-      }
+      },
 
     ],
   },
