@@ -1,9 +1,16 @@
-import React, { useState, useContext } from "react";
+// UpdateModel.jsx
+import React, { useEffect, useState, useContext } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import { toast } from "react-hot-toast";
 
-const AddModel = () => {
+const UpdateModel = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
   const { user } = useContext(AuthContext);
+
+  const [model, setModel] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const [name, setName] = useState("");
   const [framework, setFramework] = useState("");
@@ -12,52 +19,69 @@ const AddModel = () => {
   const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
 
+  useEffect(() => {
+    const fetchModel = async () => {
+      try {
+        const res = await fetch(`http://localhost:3000/models/${id}`);
+        const data = await res.json();
+        if (data.success) {
+          setModel(data.data);
+
+          // Pre-fill form
+          setName(data.data.name);
+          setFramework(data.data.framework);
+          setUseCase(data.data.useCase);
+          setDataset(data.data.dataset);
+          setDescription(data.data.description);
+          setImage(data.data.image);
+
+          if (user?.email !== data.data.createdBy) {
+            toast.error("You are not allowed to edit this model");
+            navigate(`/models/${id}`);
+          }
+        } else {
+          toast.error("Model not found");
+        }
+      } catch (err) {
+        console.error(err);
+        toast.error("Server error");
+      }
+      setLoading(false);
+    };
+
+    fetchModel();
+  }, [id, user, navigate]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!user) return toast.error("You must be logged in to add a model");
-
-    const modelData = {
-      name,
-      framework,
-      useCase,
-      dataset,
-      description,
-      image,
-      createdBy: user.email || "anonymous",
-      createdAt: new Date(),
-      purchased: 0,
-    };
+    const updatedData = { name, framework, useCase, dataset, description, image };
 
     try {
-      const res = await fetch("http://localhost:3000/models", {
-        method: "POST",
+      const res = await fetch(`http://localhost:3000/models/${id}`, {
+        method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(modelData),
+        body: JSON.stringify(updatedData),
       });
-
       const data = await res.json();
-
       if (data.success) {
-        toast.success("✅ Model added successfully!");
-        setName("");
-        setFramework("");
-        setUseCase("");
-        setDataset("");
-        setDescription("");
-        setImage("");
+        toast.success("Model updated successfully!");
+        navigate(`/models/${id}`);
       } else {
-        toast.error(data.message || "Failed to add model");
+        toast.error("Failed to update model");
       }
-    } catch (error) {
-      console.error(error);
-      toast.error("⚠️ Server error");
+    } catch (err) {
+      console.error(err);
+      toast.error("Server error");
     }
   };
 
+  if (loading) return <p className="text-center mt-10">Loading...</p>;
+  if (!model) return <p className="text-center mt-10 text-gray-500">Model not found</p>;
+
   return (
     <div className="max-w-lg mx-auto mt-10 p-6 border rounded shadow">
-      <h2 className="text-2xl font-bold mb-4 text-center">Add New AI Model</h2>
+      <h2 className="text-2xl font-bold mb-4 text-center">Update Model</h2>
       <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
         <input
           type="text"
@@ -110,11 +134,11 @@ const AddModel = () => {
           type="submit"
           className="bg-blue-600 text-white p-2 rounded mt-2 hover:bg-blue-700"
         >
-          Add Model
+          Update Model
         </button>
       </form>
     </div>
   );
 };
 
-export default AddModel;
+export default UpdateModel;

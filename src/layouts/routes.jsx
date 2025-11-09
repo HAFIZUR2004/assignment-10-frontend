@@ -3,8 +3,11 @@ import MainLayout from "./MainLayout";
 import Home from "../components/Home";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
-import Banner from "../components/Banner";
 import AddModel from "../pages/AddModel";
+import ViewModels from "../pages/ViewModels";
+import PrivateRoute from "../components/PrivateRoute";
+import ModelDetails from "../pages/ModelDetails";
+import UpdateModel from "../pages/UpdateModel";
 
 const router = createBrowserRouter([
   {
@@ -13,32 +16,49 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Home />, // ✅ JSX element আকারে দিতে হবে
-      },
-      
-      {
-        path:"login",
-        element:<Login/>
+        element: <Home />,
       },
       {
-        path:"register",
-        element:<Register/>
-      }
-      ,
+        path: "login",
+        element: <Login />,
+      },
       {
-        path:"/add-model",
-        element:<AddModel/>
-      }
-      ,
+        path: "register",
+        element: <Register />,
+      },
       {
-        path:"/add-model",
-        element:<AddModel/>
-      }
-      ,
+        path: "add-model",
+        element: (
+          <PrivateRoute>
+            <AddModel />
+          </PrivateRoute>
+        ),
+      },
       {
-        path:"/add-model",
-        element:<AddModel/>
+        path: "models",
+        element: (
+          <PrivateRoute>
+            <ViewModels />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "models/:id",
+        element: (
+          <PrivateRoute>
+            <ModelDetails />
+          </PrivateRoute>
+        ),
+      },
+      {
+       path: "/update-model/:id",
+        element: (
+          <PrivateRoute>
+            <UpdateModel />
+          </PrivateRoute>
+        ),
       }
+
     ],
   },
 ]);
