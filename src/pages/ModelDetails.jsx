@@ -1,4 +1,3 @@
-// ModelDetails.jsx
 import React, { useEffect, useState, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
@@ -30,7 +29,6 @@ const ModelDetails = () => {
       }
       setLoading(false);
     };
-
     fetchModel();
   }, [id]);
 
@@ -57,11 +55,7 @@ const ModelDetails = () => {
       await fetch("http://localhost:3000/purchases", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          modelId: id,
-          userEmail: user.email,
-          purchasedAt: new Date(),
-        }),
+        body: JSON.stringify({ modelId: id, userEmail: user.email }),
       });
 
       // 2️⃣ Increment purchased count
@@ -93,7 +87,6 @@ const ModelDetails = () => {
       <p className="mb-2"><strong>Description:</strong> {model.description}</p>
       <p className="text-gray-500 mb-4">Purchased: {purchased} times</p>
 
-      {/* Only show Edit/Delete if logged-in user is creator */}
       {user?.email === model.createdBy && (
         <div className="flex gap-2 mb-4">
           <button

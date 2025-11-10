@@ -9,6 +9,8 @@ import PrivateRoute from "../components/PrivateRoute";
 import ModelDetails from "../pages/ModelDetails";
 import UpdateModel from "../pages/UpdateModel";
 import ErrorPage from "../pages/ErrorPage";
+import MyModels from "../pages/MyModels";
+import MyPurchases from "../pages/MyPurchases";
 
 const router = createBrowserRouter([
   {
@@ -25,7 +27,7 @@ const router = createBrowserRouter([
       }
       ,
       {
-        path: "login",
+        path: "/login",
         element: <Login />,
       },
       {
@@ -39,6 +41,23 @@ const router = createBrowserRouter([
             <AddModel />
           </PrivateRoute>
         ),
+      },
+      {
+        path: "/my-purchases",
+        element: (
+          <PrivateRoute>
+            <MyPurchases/>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path:"my-models",
+        element:(
+          <PrivateRoute>
+            <MyModels></MyModels>
+          </PrivateRoute>
+        ),
+
       },
       {
         path: "models",
