@@ -1,4 +1,3 @@
-// MyPurchases.jsx
 import React, { useEffect, useState, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { Link } from "react-router-dom";
@@ -20,10 +19,10 @@ const MyPurchases = () => {
       } catch (err) {
         console.error(err);
         toast.error("Server error");
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     };
-
     fetchPurchases();
   }, [user]);
 
@@ -36,10 +35,7 @@ const MyPurchases = () => {
       <h2 className="text-3xl font-bold mb-6 text-center">My Purchases</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {purchases.map((purchase) => (
-          <div
-            key={purchase._id}
-            className="border rounded p-4 shadow hover:shadow-lg transition"
-          >
+          <div key={purchase._id} className="border rounded p-4 shadow hover:shadow-lg transition">
             <img
               src={purchase.modelDetails.image || "https://via.placeholder.com/300x200?text=No+Image"}
               alt={purchase.modelDetails.name}
