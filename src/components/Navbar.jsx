@@ -17,6 +17,7 @@ import {
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+  const [mobileMenu, setMobileMenu] = useState(false);
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
@@ -27,20 +28,63 @@ const Navbar = () => {
     setTheme(theme === "light" ? "dark" : "light");
   };
 
+  const toggleMobileMenu = () => setMobileMenu(!mobileMenu);
+
   return (
     <nav className="shadow-lg sticky top-0 z-50" style={{ backgroundColor: "#016B61" }}>
       <div className="max-w-7xl mx-auto flex justify-between items-center px-5 py-3">
-        {/* Logo */}
-        <Link to="/" className="flex items-center gap-2 hover:scale-105 transition-transform duration-300">
-          <img
-            src="https://i.ibb.co/VkM56Yv/688aecfb47d8cafab021cd4b-145-inventory-management-ai-agents.png"
-            alt="logo"
-            className="w-12 h-12 md:w-14 md:h-14 rounded-full border-2 border-[#70B2B2] shadow-md"
-          />
-          <span className="text-white font-bold text-xl md:text-2xl">BrainBuzzer</span>
-        </Link>
+        {/* ===== Logo Section ===== */}
+        <div className="flex items-center gap-2">
+          <div
+            className="relative cursor-pointer"
+            onClick={toggleMobileMenu}
+          >
+            <img
+              src="https://i.ibb.co/VkM56Yv/688aecfb47d8cafab021cd4b-145-inventory-management-ai-agents.png"
+              alt="logo"
+              className="w-12 h-12 md:w-14 md:h-14 rounded-full border-2 border-[#70B2B2] shadow-md"
+            />
 
-        {/* Menu */}
+            {/* Mobile Menu */}
+            <AnimatePresence>
+              {mobileMenu && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  className="absolute left-0 mt-14 bg-[#70B2B2] text-white rounded-lg shadow-lg w-40 p-3 md:hidden flex flex-col gap-2"
+                >
+                  <NavLink
+                    to="/"
+                    className="py-2 px-2 rounded hover:bg-[#016B61]"
+                    onClick={() => setMobileMenu(false)}
+                  >
+                    <Home size={18} /> Home
+                  </NavLink>
+                  <NavLink
+                    to="/add-model"
+                    className="py-2 px-2 rounded hover:bg-[#016B61]"
+                    onClick={() => setMobileMenu(false)}
+                  >
+                    <PlusSquare size={18} /> Add Model
+                  </NavLink>
+                  <NavLink
+                    to="/models"
+                    className="py-2 px-2 rounded hover:bg-[#016B61]"
+                    onClick={() => setMobileMenu(false)}
+                  >
+                    <Eye size={18} /> View Models
+                  </NavLink>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+
+          {/* Desktop: Show Text */}
+          
+        </div>
+
+        {/* ===== Desktop Menu ===== */}
         <div className="hidden md:flex items-center gap-8 text-white">
           <NavLink
             to="/"
@@ -74,9 +118,9 @@ const Navbar = () => {
           </NavLink>
         </div>
 
-        {/* Right Section */}
+        {/* ===== Right Section ===== */}
         <div className="flex items-center gap-4">
-          {/* Theme toggle */}
+          {/* Theme Toggle */}
           <button
             onClick={toggleTheme}
             className="p-2 rounded-full bg-[#70B2B2] hover:bg-[#016B61] text-white transition-colors"
@@ -84,6 +128,7 @@ const Navbar = () => {
             {theme === "light" ? <Moon size={20} /> : <Sun size={20} />}
           </button>
 
+          {/* Login/Profile */}
           {!user ? (
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Link
@@ -91,7 +136,7 @@ const Navbar = () => {
                 className="flex items-center gap-2 px-4 py-2 bg-[#70B2B2] hover:bg-[#016B61] text-white rounded-lg font-semibold transition-colors"
               >
                 <LogIn size={18} className="animate-bounce" />
-                <span className="flex items-center">Login</span>
+                <span>Login</span>
               </Link>
             </motion.div>
           ) : (
@@ -139,4 +184,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-// 111/
