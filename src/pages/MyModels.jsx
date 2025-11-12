@@ -10,7 +10,7 @@ const MyModels = () => {
   useEffect(() => {
     if (!user?.email) return;
 
-    fetch(`http://localhost:3000/models?email=${user.email}`)
+    fetch(`https://ai-model-inventory-server.vercel.app/models?email=${user.email}`)
       .then(res => res.json())
       .then(data => {
         if (data.success && Array.isArray(data.data)) {

@@ -9,7 +9,7 @@ const FeaturedModels = () => {
   useEffect(() => {
     const fetchModels = async () => {
       try {
-        const res = await fetch("http://localhost:3000/models/latest");
+        const res = await fetch("https://ai-model-inventory-server.vercel.app/models/latest");
         const data = await res.json();
         if (data.success) {
           setModels(data.data);

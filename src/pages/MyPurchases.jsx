@@ -12,7 +12,7 @@ const MyPurchases = () => {
     if (!user) return;
     const fetchPurchases = async () => {
       try {
-        const res = await fetch(`http://localhost:3000/purchases?email=${user.email}`);
+        const res = await fetch(`https://ai-model-inventory-server.vercel.app/purchases?email=${user.email}`);
         const data = await res.json();
         if (data.success) setPurchases(data.data);
         else toast.error("Failed to fetch purchases");

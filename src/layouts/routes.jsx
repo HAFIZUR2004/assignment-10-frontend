@@ -1,41 +1,27 @@
 import { createBrowserRouter } from "react-router-dom";
-import MainLayout from "./MainLayout";
 import Home from "../components/Home";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import AddModel from "../pages/AddModel";
 import ViewModels from "../pages/ViewModels";
-import PrivateRoute from "../components/PrivateRoute";
 import ModelDetails from "../pages/ModelDetails";
 import UpdateModel from "../pages/UpdateModel";
 import ErrorPage from "../pages/ErrorPage";
 import MyModels from "../pages/MyModels";
+import MainLayout from "./MainLayout";
 import MyPurchases from "../pages/MyPurchases";
+import PrivateRoute from "./PrivateRoute";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout />,
     children: [
+      { index: true, element: <Home /> },
+      { path: "/login", element: <Login /> },
+      { path: "/register", element: <Register /> },
       {
-        index: true,
-        element: <Home />,
-      },
-      {
-        path: "*", // invalid route fallback
-        element: <ErrorPage />,
-      }
-      ,
-      {
-        path: "/login",
-        element: <Login />,
-      },
-      {
-        path: "register",
-        element: <Register />,
-      },
-      {
-        path: "add-model",
+        path: "/add-model",
         element: (
           <PrivateRoute>
             <AddModel />
@@ -46,21 +32,20 @@ const router = createBrowserRouter([
         path: "/my-purchases",
         element: (
           <PrivateRoute>
-            <MyPurchases/>
+            <MyPurchases />
           </PrivateRoute>
         ),
       },
       {
-        path:"my-models",
-        element:(
+        path: "/my-models",
+        element: (
           <PrivateRoute>
-            <MyModels></MyModels>
+            <MyModels />
           </PrivateRoute>
         ),
-
       },
       {
-        path: "models",
+        path: "/models",
         element: (
           <PrivateRoute>
             <ViewModels />
@@ -68,7 +53,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "models/:id",
+        path: "/models/:id",
         element: (
           <PrivateRoute>
             <ModelDetails />
@@ -83,7 +68,8 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
-
+      // Always last
+      { path: "*", element: <ErrorPage /> },
     ],
   },
 ]);

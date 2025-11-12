@@ -26,7 +26,7 @@ const ViewModels = () => {
   const [selectedFrameworks, setSelectedFrameworks] = useState(["All"]);
 
   useEffect(() => {
-    fetch("http://localhost:3000/models")
+    fetch("https://ai-model-inventory-server.vercel.app/models")
       .then((res) => res.json())
       .then((data) => {
         if (data.success && Array.isArray(data.data)) {

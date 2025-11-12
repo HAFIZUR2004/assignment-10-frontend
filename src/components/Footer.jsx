@@ -7,11 +7,11 @@ const Footer = () => {
     <footer className="relative z-10 mt-5 mb-2 py-10 px-4 md:px-10 bg-gradient-to-r from-[#016B61] via-[#70B2B2] to-[#9ECFD4] rounded-3xl shadow-inner text-white">
       <div className="max-w-6xl mx-auto text-center">
         <p className="text-lg md:text-xl font-medium mb-4">
-          © 2025 AI Model Inventory Manager
+          © 2025 AI Model Inventory Manager 
         </p>
         <div className="flex justify-center gap-6 flex-wrap">
           <a
-            href="https://github.com/your-client-repo"
+            href="https://github.com/HAFIZUR2004/assignment-10-frontend"
             target="_blank"
             rel="noreferrer"
             className="flex items-center gap-2 text-white hover:text-gray-200 transition-colors"
@@ -19,11 +19,12 @@ const Footer = () => {
             <FaGithub /> Client Repo
           </a>
           <a
-            href="https://github.com/your-server-repo"
+            href="https://github.com/HAFIZUR2004/assignment-10-backend"
             target="_blank"
             rel="noreferrer"
             className="flex items-center gap-2 text-white hover:text-gray-200 transition-colors"
           >
+            
             <FaGithub /> Server Repo
           </a>
         </div>
