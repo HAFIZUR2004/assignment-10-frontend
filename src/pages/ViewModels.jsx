@@ -88,7 +88,7 @@ const ViewModels = () => {
       {/* Search & Framework Filter */}
       <div className="flex flex-col md:flex-row justify-between items-center gap-4 mb-6">
         {/* Search */}
-        <label className="flex items-center w-full md:w-1/2 border-2 border-[#016B61] rounded-xl px-3 py-2 bg-white shadow-md hover:shadow-lg transition">
+        <label className="flex items-center w-4 md:w-1/2 border-2 border-[#016B61] rounded-xl px-3 py-2 bg-white shadow-md hover:shadow-lg transition">
           <svg
             className="h-5 w-5 opacity-50 mr-2"
             xmlns="http://www.w3.org/2000/svg"
@@ -112,7 +112,7 @@ const ViewModels = () => {
         {/* Framework Select */}
         <select
           multiple
-          className="select select-secondary w-full md:w-1/3 border-2 border-[#016B61] rounded-xl px-2 py-2 bg-white text-[#016B61] shadow-md hover:shadow-lg transition"
+          className="select select-secondary w-full h-12 md:w-1/3 border-2 border-[#016B61] rounded-xl px-2 py-2 bg-white text-[#016B61] shadow-md hover:shadow-lg transition"
           value={selectedFrameworks}
           onChange={(e) => {
             const options = Array.from(e.target.selectedOptions).map((opt) => opt.value);
